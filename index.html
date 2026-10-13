@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta regresiva 2027</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #101a2d;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .IEEE {
+            width: 100%;
+            max-height: 55vh;
+            object-fit: contain;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: clamp(24px, 5vw, 42px);
+            margin-bottom: 25px;
+        }
+
+        .cronometro {
+            display: flex;
+            justify-content: center;
+            gap: clamp(10px, 4vw, 35px);
+            flex-wrap: wrap;
+        }
+
+        .unidad {
+            min-width: 65px;
+        }
+
+        .numero {
+            font-size: clamp(30px, 7vw, 60px);
+            font-weight: bold;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .etiqueta {
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-top: 8px;
+            color: #c5d0e0;
+        }
+
+        @media (max-width: 400px) {
+            .cronometro {
+                gap: 18px 12px;
+            }
+
+            .unidad {
+                min-width: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="contenedor">
+
+        <!-- Cambia imagen.jpg por el nombre de tu imagen -->
+        <img
+            class="IEEE"
+            src="IEEE.png"
+            alt="IEEE UMSNH"
+        >
+
+        <h1>NEW ERA SOON</h1>
+
+        <div class="cronometro">
+            <div class="unidad">
+                <div class="numero" id="dias">0</div>
+                <div class="etiqueta">DÍAS</div>
+            </div>
+
+            <div class="unidad">
+                <div class="numero" id="horas">00</div>
+                <div class="etiqueta">HORAS</div>
+            </div>
+
+            <div class="unidad">
+                <div class="numero" id="minutos">00</div>
+                <div class="etiqueta">MINUTOS</div>
+            </div>
+
+            <div class="unidad">
+                <div class="numero" id="segundos">00</div>
+                <div class="etiqueta">SEGUNDOS</div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Medianoche del 1 de enero de 2027,
+        // según la hora local de cada visitante.
+        const fechaObjetivo = new Date(2027, 0, 1, 0, 0, 0);
+
+        function actualizarCronometro() {
+            const ahora = new Date();
+            let diferencia = fechaObjetivo.getTime() - ahora.getTime();
+
+            if (diferencia <= 0) {
+                document.getElementById("dias").textContent = "0";
+                document.getElementById("horas").textContent = "00";
+                document.getElementById("minutos").textContent = "00";
+                document.getElementById("segundos").textContent = "00";
+                return;
+            }
+
+            const dias = Math.floor(diferencia / 86400000);
+            diferencia %= 86400000;
+
+            const horas = Math.floor(diferencia / 3600000);
+            diferencia %= 3600000;
+
+            const minutos = Math.floor(diferencia / 60000);
+            const segundos = Math.floor((diferencia % 60000) / 1000);
+
+            document.getElementById("dias").textContent = dias;
+            document.getElementById("horas").textContent =
+                String(horas).padStart(2, "0");
+            document.getElementById("minutos").textContent =
+                String(minutos).padStart(2, "0");
+            document.getElementById("segundos").textContent =
+                String(segundos).padStart(2, "0");
+        }
+
+        actualizarCronometro();
+        setInterval(actualizarCronometro, 1000);
+    </script>
+</body>
+</html>
